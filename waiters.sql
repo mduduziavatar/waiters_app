@@ -21,5 +21,3 @@ insert into daysOfWeek (days) values ('Tuesday');
 insert into daysOfWeek (days) values ('Wednesday');
 insert into daysOfWeek (days) values ('Thursday');
 insert into daysOfWeek (days) values ('Friday');
-insert into daysOfWeek (days) values ('Saturday');
-insert into daysOfWeek (days) values ('Sunday');
