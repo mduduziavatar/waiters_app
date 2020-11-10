@@ -19,7 +19,7 @@ app.use(session({
 
 const pg = require('pg');
 const Pool = pg.Pool;
-const connectionString = process.env.DATABASE_URL || 'postgresql://mdu:pg123@localhost:5432/registration_numbers';
+const connectionString = process.env.DATABASE_URL || 'postgresql://mdu:pg123@localhost:5432/waiters';
 const pool = new Pool({
     connectionString
 });
@@ -35,17 +35,64 @@ app.use(bodyParser.json());
 
 app.get('/', routes.index);
 
-app.post('/sendUsers', function(req, res) {
-    console.log(req.body)
+app.post('/sendUsers', async function(req, res) {
+    const name = req.body.nameEntered;
+    if (name) {
+        await waiters.addNameToDatabase(name)
+        console.log(name)
+
+        res.redirect('waiters')
+    } else {
+        function validate(value, result) {
+            if (!value) {
+                return result;
+            }
+            return {};
+        }
+        const customersNameInvalid = validate(name, {
+            style: "is-invalid",
+            message: "Enter a valid name e.g Siphiwe"
+        });
+        res.render('index')
+    }
+});
+
+app.post('/weekDays', async function(req, res) {
+    for (var daysOfWeek in req.body.checkBox) {
+        if (req.body.checkBox) {
+            let items = req.body.checkBox;
+            daysOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
+            console.log(items)
+        }
+    }
+    // let weekDayObject = {
+    //     staffname: staffname,
+    //     daysOfWeek: daysOfWeek
+    // }
+    // var insertQuery = "INSERT INTO waiters (staffname, daysOfWeek) values (?,?)";
+
     res.redirect('/')
 });
 
-app.get('/waiters', function(req, res) {
+app.post('/waiters', function(req, res) {
     res.render('waiters')
 });
 
-app.get('/waiters:name', function(req, res) {
-    res.redirect('/')
+app.get('/data', async function(req, res) {
+    var name = req.params.name;
+    console.log(name)
+    const names = await waiters.getAllUsers(name)
+    res.render('data', {
+        name: names
+    });
+});
+
+app.get('/days', function(req, res) {
+    res.render('days')
+})
+
+app.get('/waiters', function(req, res) {
+    res.render('waiters')
 });
 
 const PORT = process.env.PORT || 3008;

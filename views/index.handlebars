@@ -1,37 +1,52 @@
-<div class="container">
-    <div class="card">
-        <div class="card-header" style="color: red;">
-            Notice Board 09-NOV-2020
+<div class="card">
+    <div class="card-header" style="color: red;">
+        Notice Board 09-NOV-2020
 
 
-            <div class="card-body" style="color: royalblue;">
-                <blockquote class="blockquote mb-0">
-                    <p>Please enter your name and select the days you are working for this week</p>
-                    <footer class="blockquote-footer">By Lusapho <cite title="Source Title">Founder of Saphos
-                            Kitchen</cite>
-                    </footer>
-                </blockquote>
-            </div>
+        <div class="card-body" style="color: royalblue;">
+            <blockquote class="blockquote mb-0">
+                <p>Please enter your name and select the days you are working for this week</p>
+                <footer class="blockquote-footer">By Lusapho <cite title="Source Title">Founder of Saphos
+                        Kitchen</cite>
+                </footer>
+            </blockquote>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <form action="sendUsers" method="POST">
-                <input type="text" placeholder="please enter your name" class="nameEntered" name="name">
-
-                <div class="col-12"> <button type="submit" class="btn">Add Name</button>
+</div>
+<div class="row">
+    <div class="col-12">
+        <form action="/sendUsers" method="post">
+            <div class="form-group"><input type="text" value="{{name}}"
+                    class="form-control{{customersNameInvalid.style}}, nameEntered" id="formGroupExampleInput"
+                    placeholder="please enter your name" name="nameEntered"> 
+                <div id="" class="invalid-feedback">
+                    {{!-- Please provide a number of days. --}}
+                    {{customersNameInvalid.message}}
                 </div>
+            </div>
+            <div class="errors">
+                <h3>
+                    {{messages.errors}}
+                </h3>
+            </div>
+            <div class="col-12"> <button type="submit" class="btn btn-primary">Add</button>
+            </div>
 
-            </form>
-        </div>
-        <div class="col-6">
-            <form action="/waiters" method="get">
-                <button type="submit" class="btn1 btn-primary col-3">Add Name</button>
-        </div>
         </form>
-
-        <div class="col-6"> <button type="submit" class="btn2">Add Name</button>
-        </div>
-
     </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <form action="" method="get">
+            <a href="/data">Show waiters </a>
+        </form>
+    </div>
+
+    <div class="col-6"><span><img src="/kitchen.png" alt="" class="img img-primary col-12"></span></div>
+
+
+
+    <div class="col-3"><a href="/days">Admin Area</a>
+    </div>
+
 </div>

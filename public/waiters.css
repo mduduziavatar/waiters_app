@@ -20,7 +20,7 @@ container {
     margin: 1.5em;
     padding: 1.5em;
     border-radius: 0.25em;
-    background-color: dodgerblue;
+    background-color: orange;
 }
 
 .btn2 {
@@ -28,4 +28,8 @@ container {
     padding: 1.5em;
     border-radius: 0.25em;
     background-color: red;
+}
+
+body {
+    background-color: #ddd;
 }

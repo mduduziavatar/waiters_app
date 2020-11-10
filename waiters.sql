@@ -11,8 +11,6 @@ create table daysOfWeek(
 	wednesday varchar not null,
 	thursday varchar not null,
 	friday varchar not null,
-	saturday varchar not null,
-	sunday varchar not null,
 	foreign key (staff_id) references staff(id)
 );
 
@@ -21,3 +19,15 @@ insert into daysOfWeek (days) values ('Tuesday');
 insert into daysOfWeek (days) values ('Wednesday');
 insert into daysOfWeek (days) values ('Thursday');
 insert into daysOfWeek (days) values ('Friday');
+
+
+create table daysWeek(
+	id serial not null primary key,
+	staff_id int,
+	tuesday varchar not null,
+	wednesday varchar not null,
+	thursday varchar not null,
+	friday varchar not null,
+	foreign key (staff_id) references staff(id)monday varchar not null,	
+	
+);

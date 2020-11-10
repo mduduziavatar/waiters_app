@@ -1,5 +1,6 @@
 module.exports = function waitersRoutes(waitersFactory) {
     async function index(req, res, next) {
+
         try {
             console.log(req.body)
 
