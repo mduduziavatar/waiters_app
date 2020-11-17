@@ -96,9 +96,9 @@ app.get('/data', async function(req, res) {
     });
 });
 
-// app.get('/days', function(req, res) {
-//     res.render('days')
-// })
+app.get('/days', function(req, res) {
+    res.render('days')
+})
 
 app.get('/waiters/:username', async function(req, res) {
     let names = req.params.staffname;
