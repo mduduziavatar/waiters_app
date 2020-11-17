@@ -107,11 +107,11 @@ app.get('/waiters/:username', async function(req, res) {
     // let name = await waiters.get(id);
 
     // const names = await waiters.getAllUsers(name)
-    var person = await waiters.perPerson(names)
-    console.log(person)
+    // var person = await waiters.perPerson(names)
+    // console.log(person)
 
-    res.render('waiters', {
-        staffname: person
+    res.render('index', {
+
     })
 });
 
