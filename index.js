@@ -35,64 +35,84 @@ app.use(bodyParser.json());
 
 app.get('/', routes.index);
 
-app.post('/sendUsers', async function(req, res) {
+app.post('/waiters/:username', async function(req, res) {
     const name = req.body.nameEntered;
+    const days = req.body.checkBox
     if (name) {
         await waiters.addNameToDatabase(name)
-        console.log(name)
-
-        res.redirect('waiters')
-    } else {
-        function validate(value, result) {
-            if (!value) {
-                return result;
-            }
-            return {};
-        }
-        const customersNameInvalid = validate(name, {
-            style: "is-invalid",
-            message: "Enter a valid name e.g Siphiwe"
-        });
-        res.render('index')
     }
-});
+    await waiters.addWeekDay(name, days)
+    console.log(days)
+        // console.log(name)
+        // else {
+        //     function validate(value, result) {
+        //         if (!value) {
+        //             return result;
+        //         }
+        //         return {};
+        //     }
+        //     const customersNameInvalid = validate(name, {
+        //         style: "is-invalid",
+        //         message: "Enter a valid name e.g Siphiwe"
+        //     });
 
-app.post('/weekDays', async function(req, res) {
-    for (var daysOfWeek in req.body.checkBox) {
-        if (req.body.checkBox) {
-            let items = req.body.checkBox;
-            daysOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
-            console.log(items)
-        }
-    }
-    // let weekDayObject = {
-    //     staffname: staffname,
-    //     daysOfWeek: daysOfWeek
     // }
-    // var insertQuery = "INSERT INTO waiters (staffname, daysOfWeek) values (?,?)";
+    res.render('index', {
 
-    res.redirect('/')
+    })
 });
 
-app.post('/waiters', function(req, res) {
-    res.render('waiters')
-});
+// app.get('/waiters/:username', async function(req, res) {
+//     // let days = req.body.checkBox;
+//     // var name = req.body.name;
+
+//     // await waiters.create(items)
+
+//     // // for (var dayOfWeek in req.body.checkBox) {
+//     // //     if (req.body.checkBox) {
+
+//     // //         dayOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
+
+//     // //         console.log(dayOfTheWeek)
+//     // //     }
+//     // // }
+
+//     res.render('index', {
+//         // name: await waiters.addNameToDatabase(name)
+
+//     })
+// });
+
+// app.post('/waiters/:username', function(req, res) {
+//     res.render('index')
+// });
 
 app.get('/data', async function(req, res) {
-    var name = req.params.name;
-    console.log(name)
+    let name = req.params.name;
     const names = await waiters.getAllUsers(name)
+
     res.render('data', {
-        name: names
+        staffname: names
     });
 });
 
-app.get('/days', function(req, res) {
-    res.render('days')
-})
+// app.get('/days', function(req, res) {
+//     res.render('days')
+// })
 
-app.get('/waiters', function(req, res) {
-    res.render('waiters')
+app.get('/waiters/:username', async function(req, res) {
+    let names = req.params.staffname;
+    // console.log(id)
+
+    // let name = await waiters.get(id);
+
+    // const names = await waiters.getAllUsers(name)
+    var person = await waiters.perPerson(names)
+    console.log(person)
+
+    res.render('waiters', {
+        staffname: person
+    })
 });
 
 const PORT = process.env.PORT || 3008;

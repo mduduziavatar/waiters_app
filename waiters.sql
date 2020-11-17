@@ -3,31 +3,21 @@ create table staff(
 	staffName text not null
 );
 
-create table daysOfWeek(
-	id serial not null primary key,
-	staff_id int,
-	monday varchar not null,	
-	tuesday varchar not null,
-	wednesday varchar not null,
-	thursday varchar not null,
-	friday varchar not null,
-	foreign key (staff_id) references staff(id)
+CREATE TABLE totalDays (
+  id serial not null primary key,
+  weekday TEXT,
 );
 
-insert into daysOfWeek (days) values ('Monday');
-insert into daysOfWeek (days) values ('Tuesday');
-insert into daysOfWeek (days) values ('Wednesday');
-insert into daysOfWeek (days) values ('Thursday');
-insert into daysOfWeek (days) values ('Friday');
+INSERT INTO totalDays (weekday) VALUES ('monday');
+INSERT INTO totalDays (weekday) VALUES ('tuesday');
+INSERT INTO totalDays (weekday) VALUES ('wednesday');
+INSERT INTO totalDays (weekday) VALUES ('thursday');
+INSERT INTO totalDays (weekday) VALUES ('friday');
 
-
-create table daysWeek(
+create table nameDays(
 	id serial not null primary key,
 	staff_id int,
-	tuesday varchar not null,
-	wednesday varchar not null,
-	thursday varchar not null,
-	friday varchar not null,
-	foreign key (staff_id) references staff(id)monday varchar not null,	
-	
+	totalDays_id int,
+	foreign key (staff_id) references staff(id),
+	foreign key (totalDays_id) references totalDays(id)
 );
