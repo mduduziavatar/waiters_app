@@ -25,10 +25,19 @@ module.exports = function waitersFactory(pool) {
         }
     }
 
-    async function staffId(name) {
-        let linkingId = await pool.query('select id from staff where staffname=$1', [name]);
-        return linkingId.rows[0]['id'];
+    // async function staffId(name) {
+    //     console.log('test2')
+
+    //     var linkingId = await pool.query(`select id from staff where staffname = $1`, [name]);
+    //     console.log(linkingId.rows + " id")        return linkingId.rows[0].id;
+
+    // }
+    async function ids(names) {
+        const name = await pool.query(`select id from staff where staffname = $1`, [names])
+        return name.rows[0].id
     }
+
+
 
     async function get(days) {
         for (const id of days) {
@@ -48,43 +57,26 @@ module.exports = function waitersFactory(pool) {
         return names.rows;
     }
 
-
-    async function addWeekDay(staffname, weekday) {
+    async function addData(day, staffname) {
         // this is for db 
-
         let linkingId = await staffId(staffname)
-        for (const day of weekday) {
-            await pool.query("insert into nameDays(staff_id, totalDays_id) values($1,$2)", [linkingId, day]);
-
+        const checker = await pool.query(`select id from totalDays where staffname = $1 `, [day])
+        if (checker.rowCount === 0) {
+            const weekDay = await pool.query(`insert into nameDays(staff_id, totalDays_id) values($1, $2)`, [day, linkingId]);
         }
     }
-
-
-
-    // async function addData(day) {
-    //     // this is for db 
-    //     const checker = await pool.query(`
-    //                 select id from nameDays where id = $1 `, [day])
-    //     if (checker.rowCount === 0) {
-    //         const weekDay = await pool.query(`
-    //                 insert into nameDays(staff_id, totaldays_id) values($1, $2)
-    //                 `, [day]);
-    //     }
-
-    // }
-    async function getWeekDay() {
+    async function getWeekDay(getDay) {
         // this is for db 
-        const weekDay = await pool.query(`
-                    select * from totalDays `);
+        const weekDay = await pool.query(`select id from totalDays where weekday =$1`, [getDay]);
         return weekDay.rows;
     }
     return {
         addNameToDatabase,
         getAllUsers,
         getWeekDay,
-        addWeekDay,
         get,
-        staffId,
+        ids,
         allStaff,
+        addData
     }
 }

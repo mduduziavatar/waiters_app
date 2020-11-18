@@ -1,6 +1,7 @@
+drop table if exists totalDays, staff, nameDays;
 create table staff(
 	id serial not null primary key,
-	staffName text not null
+	staffname text not null
 );
 
 CREATE TABLE totalDays (

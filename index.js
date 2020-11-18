@@ -38,28 +38,31 @@ app.get('/', routes.index);
 app.post('/waiters/:username', async function(req, res) {
     const name = req.body.nameEntered;
     const days = req.body.checkBox
-    if (name) {
-        await waiters.addNameToDatabase(name)
-    }
-    await waiters.addWeekDay(name, days)
-    console.log(days)
-        // console.log(name)
-        // else {
-        //     function validate(value, result) {
-        //         if (!value) {
-        //             return result;
-        //         }
-        //         return {};
-        //     }
-        //     const customersNameInvalid = validate(name, {
-        //         style: "is-invalid",
-        //         message: "Enter a valid name e.g Siphiwe"
-        //     });
+    let names = await waiters.addNameToDatabase(name)
+    let staff_id = await waiters.ids(names)
+    console.log(staff_id)
+
+    await waiters.addData(days, names)
+
+    // addNameId =
+    // console.log(days)
+    // console.log(name)
+    // else {
+    //     function validate(value, result) {
+    //         if (!value) {
+    //             return result;
+    //         }
+    //         return {};
+    //     }
+    //     const customersNameInvalid = validate(name, {
+    //         style: "is-invalid",
+    //         message: "Enter a valid name e.g Siphiwe"
+    //     });
 
     // }
     res.render('index', {
-
-    })
+        staffname: names
+    });
 });
 
 // app.get('/waiters/:username', async function(req, res) {
