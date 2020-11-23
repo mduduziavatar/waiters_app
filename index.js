@@ -1,3 +1,5 @@
+'none';
+
 const express = require('express');
 const WaitersFactory = require('./waiters');
 const Routes = require('./routes');
@@ -38,11 +40,13 @@ app.get('/', routes.index);
 app.post('/waiters/:username', async function(req, res) {
     const name = req.body.nameEntered;
     const days = req.body.checkBox
-    let names = await waiters.addNameToDatabase(name)
-    let staff_id = await waiters.ids(names)
-    console.log(staff_id)
+    console.log(name)
 
-    await waiters.addData(days, names)
+    // let names = await waiters.addNameToDatabase(name)
+    //     // let staff_id = await waiters.ids(names)
+    //     // console.log(staff_id)
+
+    // await waiters.addData(days, name)
 
     // addNameId =
     // console.log(days)
@@ -61,64 +65,65 @@ app.post('/waiters/:username', async function(req, res) {
 
     // }
     res.render('index', {
-        staffname: names
+        name: name
     });
 });
 
-// app.get('/waiters/:username', async function(req, res) {
-//     // let days = req.body.checkBox;
-//     // var name = req.body.name;
+app.get('/waiters/', async function(req, res) {
+    let days = req.body.checkBox;
+    var name = req.body.name;
+    // console.log(days)
 
-//     // await waiters.create(items)
+    // await waiters.create(items)
 
-//     // // for (var dayOfWeek in req.body.checkBox) {
-//     // //     if (req.body.checkBox) {
+    // // for (var dayOfWeek in req.body.checkBox) {
+    // //     if (req.body.checkBox) {
 
-//     // //         dayOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
+    // //         dayOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
 
-//     // //         console.log(dayOfTheWeek)
-//     // //     }
-//     // // }
+    // //         console.log(dayOfTheWeek)
+    // //     }
+    // // }
 
-//     res.render('index', {
-//         // name: await waiters.addNameToDatabase(name)
+    res.render('index', {
+        // name: await waiters.addNameToDatabase(name)
 
-//     })
-// });
-
-// app.post('/waiters/:username', function(req, res) {
-//     res.render('index')
-// });
-
-app.get('/data', async function(req, res) {
-    let name = req.params.name;
-    const names = await waiters.getAllUsers(name)
-
-    res.render('data', {
-        staffname: names
-    });
+    })
 });
+
+// // app.post('/waiters/:username', function(req, res) {
+// //     res.render('index')
+// // });
+
+// app.get('/data', async function(req, res) {
+//     let name = req.params.name;
+//     const names = await waiters.getAllUsers(name)
+
+//     res.render('data', {
+//         staffname: names
+//     });
+// });
 
 app.get('/days', function(req, res) {
     res.render('days')
 })
 
-app.get('/waiters/:username', async function(req, res) {
-    let names = req.params.staffname;
-    // console.log(id)
+// app.get('/waiters/:username', async function(req, res) {
+//     let names = req.params.staffname;
+//     // console.log(id)
 
-    // let name = await waiters.get(id);
+//     // let name = await waiters.get(id);
 
-    // const names = await waiters.getAllUsers(name)
-    // var person = await waiters.perPerson(names)
-    // console.log(person)
+//     // const names = await waiters.getAllUsers(name)
+//     // var person = await waiters.perPerson(names)
+//     // console.log(person)
 
-    res.render('index', {
+//     res.render('index', {
 
-    })
-});
+//     })
+// });
 
-const PORT = process.env.PORT || 3008;
+const PORT = process.env.PORT || 5700;
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);

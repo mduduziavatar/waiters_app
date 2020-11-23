@@ -1,24 +1,24 @@
-drop table if exists totalDays, staff, nameDays;
+drop table if exists totaldays, staff, namedays;
 create table staff(
 	id serial not null primary key,
-	staffname text not null
+	name VARCHAR
 );
 
-CREATE TABLE totalDays (
+CREATE TABLE totaldays(
   id serial not null primary key,
-  weekday TEXT,
+  weekday text
 );
 
-INSERT INTO totalDays (weekday) VALUES ('monday');
-INSERT INTO totalDays (weekday) VALUES ('tuesday');
-INSERT INTO totalDays (weekday) VALUES ('wednesday');
-INSERT INTO totalDays (weekday) VALUES ('thursday');
-INSERT INTO totalDays (weekday) VALUES ('friday');
+INSERT INTO totaldays (weekday) VALUES ('monday');
+INSERT INTO totaldays (weekday) VALUES ('tuesday');
+INSERT INTO totaldays (weekday) VALUES ('wednesday');
+INSERT INTO totaldays (weekday) VALUES ('thursday');
+INSERT INTO totaldays (weekday) VALUES ('friday');
 
-create table nameDays(
+create table namedays(
 	id serial not null primary key,
 	staff_id int,
-	totalDays_id int,
+	totaldays_id int,
 	foreign key (staff_id) references staff(id),
-	foreign key (totalDays_id) references totalDays(id)
+	foreign key (totaldays_id) references totaldays(id)
 );

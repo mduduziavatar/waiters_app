@@ -4,7 +4,9 @@ module.exports = function waitersRoutes(waitersFactory) {
         try {
             console.log(req.body)
 
-            res.render('index');
+            res.render('index', {
+                // name: name
+            });
         } catch (err) {
             next(err)
         }

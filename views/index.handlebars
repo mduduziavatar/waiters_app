@@ -1,8 +1,6 @@
 <div class="card">
     <div class="card-header" style="color: red;">
         Notice Board 09-NOV-2020
-
-
         <div class="card-body" style="color: royalblue;">
             <blockquote class="blockquote mb-0">
                 <p>Please enter your name and select the days you are working for this week</p>
@@ -14,8 +12,9 @@
     </div>
 </div>
 <div class="row">
+    
     <div class="col-12">
-        <form action="/waiters/:username" method="post">
+        <form action="/waiters/{{username}}" method="post">
             <div class="form-group"><input type="text" value="{{name}}"
                     class="form-control{{customersNameInvalid.style}}, nameEntered" id="formGroupExampleInput"
                     placeholder="please enter your name" name="nameEntered">
@@ -32,41 +31,38 @@
             <h5>Please select days below:</h5>
             <div class="check" name="checkBox" id="checkBox">
                 <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox1" value="1" name="checkBox">
+                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox1" value="monday" name="checkBox">
                     <label class="form-check-label" for="inlineCheckbox1">Monday</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox2" value="2" name="checkBox">
+                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox2" value="tuesday" name="checkBox">
                     <label class="form-check-label" for="inlineCheckbox2">Tuesday</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox3" value="3" name="checkBox">
+                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox3" value="wednesday"
+                        name="checkBox">
                     <label class="form-check-label" for="inlineCheckbox3">Wednesday</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox4" value="4" name="checkBox">
+                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox4" value="thursday" name="checkBox">
                     <label class="form-check-label" for="inlineCheckbox4">Thursday</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox5" value="5" name="checkBox">
+                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox5" value="friday" name="checkBox">
                     <label class="form-check-label" for="inlineCheckbox5">Friday</label>
                 </div>
             </div>
-            <div class="col-12"> <button type="submit" class="btn btn-primary">Add</button>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Add</button>
             </div>
-
         </form>
     </div>
 </div>
 <div class="row">
     <div class="col-3">
-            <a href="/data">Show waiters </a>
+        <a href="/data">Show waiters </a>
     </div>
-
     <div class="col-6"><span><img src="/kitchen.png" alt="" class="img img-primary col-12"></span></div>
-
-
-
     <div class="col-3"><a href="/days">Admin Area</a>
     </div>
 
