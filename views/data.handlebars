@@ -1,7 +1,32 @@
 <div class="row">
     <div class="col-12">
-        {{#each staffname}}
-        <h2><a href="/waiters/{{this.staffname}}">{{this.staffname}}</a></h2>
+        {{#each name}}
+        <h2><a href="/waiters/{{this.name}}">{{this.name}}</a></h2>
         {{/each}}
+    </div>
+
+
+    <h5>Please select days below:</h5>
+    <div class="check" name="checkBox" id="checkBox">
+        <div class="form-check form-check-inline">
+            <input class="formCheckInput" type="checkbox" id="inlineCheckbox1" value="monday" name="checkBox">
+            <label class="form-check-label" for="inlineCheckbox1">Monday</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="formCheckInput" type="checkbox" id="inlineCheckbox2" value="tuesday" name="checkBox">
+            <label class="form-check-label" for="inlineCheckbox2">Tuesday</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="formCheckInput" type="checkbox" id="inlineCheckbox3" value="wednesday" name="checkBox">
+            <label class="form-check-label" for="inlineCheckbox3">Wednesday</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="formCheckInput" type="checkbox" id="inlineCheckbox4" value="thursday" name="checkBox">
+            <label class="form-check-label" for="inlineCheckbox4">Thursday</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="formCheckInput" type="checkbox" id="inlineCheckbox5" value="friday" name="checkBox">
+            <label class="form-check-label" for="inlineCheckbox5">Friday</label>
+        </div>
     </div>
 </div>

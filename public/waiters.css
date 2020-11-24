@@ -18,21 +18,6 @@
     margin: 0.5em;
     padding: 0.5em;
     border-radius: 0.25em;
-    background-color: green;
-}
-
-.btn1 {
-    margin: 1.5em;
-    padding: 1.5em;
-    border-radius: 0.25em;
-    background-color: orange;
-}
-
-.btn2 {
-    margin: 1.5em;
-    padding: 1.5em;
-    border-radius: 0.25em;
-    background-color: red;
 }
 
 Body {

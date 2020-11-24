@@ -1,4 +1,4 @@
-'none';
+'use strict';
 
 const express = require('express');
 const WaitersFactory = require('./waiters');
@@ -37,72 +37,63 @@ app.use(bodyParser.json());
 
 app.get('/', routes.index);
 
-app.post('/waiters/:username', async function(req, res) {
+app.post('/waiters', async function(req, res) {
     const name = req.body.nameEntered;
+    await waiters.addNameToDatabase(name);
+
+    const string = "/waiters/" + name
+    res.redirect(string)
+        // res.render('waiters', {
+        //     name: name
+        // });
+});
+
+
+
+app.get('/waiters/:name', async function(req, res) {
+    let name = req.params.name;
+    var item = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+
+    console.log(name);
     const days = req.body.checkBox
-    console.log(name)
+        // const all = await waiters.getAllUsers(name)
 
-    // let names = await waiters.addNameToDatabase(name)
-    //     // let staff_id = await waiters.ids(names)
-    //     // console.log(staff_id)
+    let staffId = await waiters.ids(item)
+    console.log(staffId);
 
-    // await waiters.addData(days, name)
-
-    // addNameId =
-    // console.log(days)
-    // console.log(name)
-    // else {
-    //     function validate(value, result) {
-    //         if (!value) {
-    //             return result;
-    //         }
-    //         return {};
-    //     }
-    //     const customersNameInvalid = validate(name, {
-    //         style: "is-invalid",
-    //         message: "Enter a valid name e.g Siphiwe"
-    //     });
-
-    // }
-    res.render('index', {
-        name: name
-    });
+    // console.log(staffId);
+    // all = all.map(function(allName) {
+    //     allName = allName.id === staffId.staff_id
+    //     return allName
+    // })
+    res.render('waiters');
 });
 
-app.get('/waiters/', async function(req, res) {
-    let days = req.body.checkBox;
-    var name = req.body.name;
-    // console.log(days)
+// app.get('/waiters/', async function(req, res) {
+//     let days = req.body.checkBox;
+//     var name = req.body.name;
+//     const each = await waiters.addNameToDatabase(name)
+//     const all = waiters.getAllUsers(each)
+//     console.log(all)
 
-    // await waiters.create(items)
+//     // // for (var dayOfWeek in req.body.checkBox) {
+//     // //     if (req.body.checkBox) {
 
-    // // for (var dayOfWeek in req.body.checkBox) {
-    // //     if (req.body.checkBox) {
+//     // //         dayOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
 
-    // //         dayOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
+//     // //         console.log(dayOfTheWeek)
+//     // //     }
+//     // // }
 
-    // //         console.log(dayOfTheWeek)
-    // //     }
-    // // }
+//     res.render('data', {
+//         // name: 
 
-    res.render('index', {
-        // name: await waiters.addNameToDatabase(name)
-
-    })
-});
+//     })
+// });
 
 // // app.post('/waiters/:username', function(req, res) {
 // //     res.render('index')
 // // });
-
-// app.get('/data', async function(req, res) {
-//     let name = req.params.name;
-//     const names = await waiters.getAllUsers(name)
-
-//     res.render('data', {
-//         staffname: names
-//     });
-// });
 
 app.get('/days', function(req, res) {
     res.render('days')

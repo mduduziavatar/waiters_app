@@ -14,8 +14,9 @@
 <div class="row">
     
     <div class="col-12">
-        <form action="/waiters/{{username}}" method="post">
-            <div class="form-group"><input type="text" value="{{name}}"
+        <form action="/waiters" method="post">
+            <div class="form-group">
+                <input type="text" 
                     class="form-control{{customersNameInvalid.style}}, nameEntered" id="formGroupExampleInput"
                     placeholder="please enter your name" name="nameEntered">
                 <div id="" class="invalid-feedback">
@@ -27,30 +28,6 @@
                 <h3>
                     {{messages.errors}}
                 </h3>
-            </div>
-            <h5>Please select days below:</h5>
-            <div class="check" name="checkBox" id="checkBox">
-                <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox1" value="monday" name="checkBox">
-                    <label class="form-check-label" for="inlineCheckbox1">Monday</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox2" value="tuesday" name="checkBox">
-                    <label class="form-check-label" for="inlineCheckbox2">Tuesday</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox3" value="wednesday"
-                        name="checkBox">
-                    <label class="form-check-label" for="inlineCheckbox3">Wednesday</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox4" value="thursday" name="checkBox">
-                    <label class="form-check-label" for="inlineCheckbox4">Thursday</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="formCheckInput" type="checkbox" id="inlineCheckbox5" value="friday" name="checkBox">
-                    <label class="form-check-label" for="inlineCheckbox5">Friday</label>
-                </div>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Add</button>
@@ -67,3 +44,5 @@
     </div>
 
 </div>
+
+

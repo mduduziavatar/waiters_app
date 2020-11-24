@@ -36,9 +36,10 @@ module.exports = function waitersFactory(pool) {
 
     //}
     async function ids(names) {
-        const name = await pool.query(`select * from staff where id = $1`, [names])
+        const name = await pool.query(`select * from staff where name = $1`, [names])
+        console.log(name);
         if (name.rows.length > 0) {
-            return name.rows[0];
+            return name.rows[0].id;
         }
         return null;
     }
@@ -85,6 +86,7 @@ module.exports = function waitersFactory(pool) {
         addNameToDatabase,
         getAllUsers,
         get,
-        addData
+        addData,
+        ids
     }
 }

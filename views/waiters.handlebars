@@ -1,8 +1,6 @@
 <div class="row">
-    <form class="main" action="/waiters/{{this.staffname}}" method="post">
-        <h2>{{this.staffname}}</h2>
-
-        <h5>Please select days below:</h5>
+    <form class="main" action="/data/{{this.name}}" method="get">
+        <h5>{{this.name}}Please select days below:</h5>
         <div class="form-check form-check-inline">
             <input class="formCheckInput" type="checkbox" id="inlineCheckbox1" value="1" name="checkBox">
             <label class="form-check-label" for="inlineCheckbox1">Monday</label>
