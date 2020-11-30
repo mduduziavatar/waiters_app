@@ -1,17 +1,5 @@
 module.exports = function waitersFactory(pool) {
 
-
-    // async function allStaff(day) {
-    //     if (day === 'Monday') {
-    //         const allMonday = await pool.query(`select monday from daysofweek`);
-    //         return allRegistrations.rows
-    //     } else if (day === 'Monday') {
-    //         const filtered = await pool.query(`select * from registrations where towns_id = $1;`, [town]);
-    //         return filtered.rows
-
-    //     }
-    // }
-
     async function addNameToDatabase(name) {
         var regularExpression = /[^A-Za-z]/g;
         var lettersOnly = name.replace(regularExpression, "")
@@ -23,70 +11,113 @@ module.exports = function waitersFactory(pool) {
         if (checker.rowCount === 0) {
             const row = await pool.query(`insert into staff (name) values ($1)`, [item]);
             return row.rows
-            console.log(row.rows)
-
         }
     }
 
-    // async function staffId(name) {
-    //     console.log('test2')
-
-    //     var linkingId = await pool.query(`select id from staff where name = $1`, [name]);
-    //     console.log(linkingId.rows + " id")        return linkingId.rows[0].id;
-
-    //}
     async function ids(names) {
-        const name = await pool.query(`select * from staff where name = $1`, [names])
-        console.log(name);
+        const name = await pool.query(`select id from staff where name = $1`, [names])
+        if (name.rows.length > 0) {
+            return name.rows[0].id;
+        }
+        // console.log(name);
+        return null;
+    }
+
+    async function dayIds(names) {
+        const name = await pool.query(`select * from totaldays where id = $1`, [names])
+            // console.log(name)
         if (name.rows.length > 0) {
             return name.rows[0].id;
         }
         return null;
     }
 
-
-
     async function get(days) {
-        for (const id of days) {
-            const joined = await pool.query(`select staff.name
-             from staff
-             inner join namedays
-             on staff.id = shift.staff_id
-             inner join totaldays
-             on namedays.totaldays_id = totaldays.id where totaldays_id=$1`, [days]);
-            return joined.rows;
+
+        const names = await pool.query(`select totaldays_name from namedays where staff_name = $1`, [days])
+        const name = names.rows
+
+        const allDays = await pool.query(`select * from totaldays`)
+        const day = allDays.rows
+            // console.log(day);
+        day.forEach(function(all) {
+            name.forEach(function(week) {
+                if (week.totaldays_name === all.totaldays) {
+                    all.state = "checked"
+                }
+            })
+        })
+        return day
+    }
+
+    async function admin() {
+        var daysCount = await pool.query(`select count(*) from totaldays`)
+        const daysId = daysCount.rows[0].count
+
+        var day = await pool.query(`select * from totaldays`)
+        var allRows = day.rows
+
+        let list = []
+
+        for (var i = 0; i < daysId; i++) {
+            var days = allRows[i].day
+
+            var lists = await pool.query(`select staff_name from namedays where totaldays_name = $1`, [day])
+                // console.log(lists.rows);
+
+            let names = []
+            let colors = ""
+            for (var x = 0; x < lists.rows.length; x++) {
+
+                name = lists.rows[x]
+                names.push(name)
+            }
+
+            if (names.length > 3) {
+                colors = 'red'
+            } else if (names.length === 3) {
+                colors = 'green'
+            } else {
+                colors = 'orange'
+            }
+
+            list.push({
+                weekday: allRows,
+                name: names,
+                color: colors,
+            })
         }
+        return list
     }
 
     async function getAllUsers() {
         // this is for db 
-        const names = await pool.query(`select * from staff`);
+        const names = await pool.query(`
+                    select * from staff `);
         return names.rows;
     }
 
-    async function addData(day, names) {
-        if (!names == "") {
-
-            // const name = await pool.query(`select id from staff where name = $1`, [names])
-            // console.log(name.rows)
-
-            // this is for db 
-            let linkingId = await ids(name)
-                //loop through the days and after get the individual days using the [i] 
-            const checker = await pool.query(`select id from totaldays where weekday = $1 `, [day])
-            console.log(checker.rows[0].id)
-            if (checker.rowCount === 0) {
-                const weekDay = await pool.query(`insert into namedays(staff_id, totaldays_id) values($1, $2)`, [checker, linkingId]);
-                // console.log(weekDay.rows)
-            }
+    async function addData(name, days) {
+        //this is for the admin
+        await pool.query(`delete from namedays where staff_name = $1 `, [name])
+            //loop through the days and after get the individual days using
+        for (var i = 0; i < days.length; i++) {
+            var weekDay = days[i];
+            await pool.query(`
+                    insert into namedays(totaldays_name, staff_name) values($1, $2)
+                    `, [weekDay, name]);
         }
     }
+
+
 
     return {
         addNameToDatabase,
         getAllUsers,
         get,
         addData,
-        ids
+        ids,
+        dayIds,
+        admin
     }
 }

@@ -37,67 +37,59 @@ app.use(bodyParser.json());
 
 app.get('/', routes.index);
 
-app.post('/waiters', async function(req, res) {
+app.post('/', async function(req, res) {
     const name = req.body.nameEntered;
-    await waiters.addNameToDatabase(name);
+    const adding = await waiters.addNameToDatabase(name)
+        // console.log(adding);
 
     const string = "/waiters/" + name
     res.redirect(string)
-        // res.render('waiters', {
-        //     name: name
-        // });
 });
-
-
 
 app.get('/waiters/:name', async function(req, res) {
     let name = req.params.name;
+    // const days = req.body.day
     var item = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
 
-    console.log(name);
-    const days = req.body.checkBox
-        // const all = await waiters.getAllUsers(name)
+    const nameEntered = await waiters.ids(item)
+        // console.log(nameEntered);
 
-    let staffId = await waiters.ids(item)
-    console.log(staffId);
+    // console.log(item);
+    // console.log(nameEntered);
 
-    // console.log(staffId);
-    // all = all.map(function(allName) {
-    //     allName = allName.id === staffId.staff_id
-    //     return allName
-    // })
-    res.render('waiters');
+    const allDays = await waiters.get(name)
+        // await waiters.addData(allDays, name)
+
+    res.render('waiters', {
+        name: name,
+        allDays
+    });
 });
 
-// app.get('/waiters/', async function(req, res) {
-//     let days = req.body.checkBox;
-//     var name = req.body.name;
-//     const each = await waiters.addNameToDatabase(name)
-//     const all = waiters.getAllUsers(each)
-//     console.log(all)
+app.post('/waiters/:name', async function(req, res) {
+    const days = req.body.day
+    let name = req.params.name;
+    const allDays = await waiters.get(name)
+        //console.log(name);
+    await waiters.ids(name)
+    var item = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+    await waiters.addData(name, days)
+    res.render('index', {
+        // name: name,
+        // allDays
+    });
+});
 
-//     // // for (var dayOfWeek in req.body.checkBox) {
-//     // //     if (req.body.checkBox) {
+app.get('/days', async function(req, res) {
+    const weekly = await waiters.admin()
+        // console.log(weekly);
+    res.render('days', {
+        list: weekly
 
-//     // //         dayOfTheWeek = JSON.stringify(items).replace(/]|[[]|"/g, '', )
+    })
+});
 
-//     // //         console.log(dayOfTheWeek)
-//     // //     }
-//     // // }
 
-//     res.render('data', {
-//         // name: 
-
-//     })
-// });
-
-// // app.post('/waiters/:username', function(req, res) {
-// //     res.render('index')
-// // });
-
-app.get('/days', function(req, res) {
-    res.render('days')
-})
 
 // app.get('/waiters/:username', async function(req, res) {
 //     let names = req.params.staffname;

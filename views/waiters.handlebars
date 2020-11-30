@@ -1,7 +1,13 @@
 <div class="row">
-    <form class="main" action="/data/{{this.name}}" method="get">
-        <h5>{{this.name}}Please select days below:</h5>
-        <div class="form-check form-check-inline">
+    <form class="main" action="/waiters/{{name}}" method="post">
+        <h2>{{this.name}}</h2>
+        <h5> Please select days below:</h5>
+
+        {{#each allDays}}
+        <input type="checkbox" name="day" value="{{this.weekday}}" {{this.weekday}}>
+        <label for="all"> {{this.weekday}}</label>
+        {{/each}}
+        {{!-- <div class="form-check form-check-inline">
             <input class="formCheckInput" type="checkbox" id="inlineCheckbox1" value="1" name="checkBox">
             <label class="form-check-label" for="inlineCheckbox1">Monday</label>
         </div>
@@ -20,7 +26,11 @@
         <div class="form-check form-check-inline">
             <input class="formCheckInput" type="checkbox" id="inlineCheckbox2" value="5" name="checkBox">
             <label class="form-check-label" for="inlineCheckbox2">Friday</label>
-        </div>
+        </div> --}}
         <button type="submit" class="userBtn">Home</button>
     </form>
 </div>
+
+<form class="main" action="/waiters/{{name}}" method="get">
+
+</form>
